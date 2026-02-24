@@ -124,4 +124,5 @@ STATIC_URL = 'static/'
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://hrms-lite-flame-zeta.vercel.app",
 ]
