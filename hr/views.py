@@ -4,6 +4,7 @@ from .serializers import EmployeeSerializer, AttendanceSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Count
+from django.utils.timezone import now
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all().order_by("-created_at")
