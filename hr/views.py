@@ -30,14 +30,19 @@ class AttendanceViewSet(viewsets.ModelViewSet):
     
 @api_view(["GET"])
 def dashboard_summary(request):
+    today = now().date()
+
     total_employees = Employee.objects.count()
-    total_attendance = Attendance.objects.count()
-    present_count = Attendance.objects.filter(status="Present").count()
-    absent_count = Attendance.objects.filter(status="Absent").count()
+
+    today_attendance = Attendance.objects.filter(date=today)
+
+    present_count = today_attendance.filter(status="Present").count()
+    absent_count = today_attendance.filter(status="Absent").count()
 
     return Response({
         "total_employees": total_employees,
-        "total_attendance": total_attendance,
+        "today_attendance": today_attendance.count(),
         "present_count": present_count,
         "absent_count": absent_count,
+        "date": today,
     })
