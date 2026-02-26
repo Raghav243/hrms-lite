@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Employee, Attendance
+from datetime import date
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -34,9 +35,26 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 #         return data
 
+# class AttendanceSerializer(serializers.ModelSerializer):
+#     employee_name = serializers.CharField(source="employee.full_name", read_only=True)
+
+#     class Meta:
+#         model = Attendance
+#         fields = "__all__"
+
+
+from .models import Attendance
+
 class AttendanceSerializer(serializers.ModelSerializer):
     employee_name = serializers.CharField(source="employee.full_name", read_only=True)
 
     class Meta:
         model = Attendance
         fields = "__all__"
+
+    def validate_date(self, value):
+        if value != date.today():
+            raise serializers.ValidationError(
+                "Attendance can only be marked for today."
+            )
+        return value
